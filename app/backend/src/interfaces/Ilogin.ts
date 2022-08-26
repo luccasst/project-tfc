@@ -1,3 +1,6 @@
 export interface Ilogin {
-  id: number;
+  id: number,
+  username: string,
+  role: string,
+  email: string,
 }

@@ -1,13 +1,11 @@
 import { Request, Response } from 'express';
 import LoginService from '../services/loginService';
-import tokenGenerate from '../middlewares/jwt';
 
-class LoginController {
-  static async login(req:Request, res: Response) {
-    await LoginService.login(req.body);
-    const token = tokenGenerate(req.body);
-    return res.status(200).json({ token });
-  }
-}
+export const LoginController = async (req: Request, res: Response) => {
+  const user = await LoginService(req.body);
+  return res.status(200).json({ token: user });
+};
 
-export default LoginController;
+export const getRole = (req: Request, res: Response) => res.status(200).json({
+  role: req.body.user.role,
+});

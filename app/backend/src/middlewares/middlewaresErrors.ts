@@ -1,11 +1,9 @@
-import { ErrorRequestHandler } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import ThrowErrors from '../utils/ThrowErrors';
 
-const middlewareError: ErrorRequestHandler = (err, _req, res) => {
-  if (!err.status) return res.status(500).json({ message: 'Internal Server Error' });
-
-  const { status, message } = err;
-
-  res.status(status).json({ message });
+const error = (err: ThrowErrors, _req: Request, res: Response, _next: NextFunction) => {
+  const { message, status } = err as ThrowErrors;
+  res.status(status || 500).json({ message });
 };
 
-export default middlewareError;
+export default error;
