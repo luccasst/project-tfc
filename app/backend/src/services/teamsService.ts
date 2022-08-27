@@ -1,9 +1,13 @@
 import Team from '../database/models/team';
 import { ITeam } from '../interfaces/teamsInterface';
 
-const getTeam = async (): Promise <ITeam[]> => {
+export const getTeam = async (): Promise <ITeam[]> => {
   const team = await Team.findAll();
   return team;
 };
 
-export default getTeam;
+export const getByIdTeam = async (id: number) => {
+  const team = await Team.findByPk(id);
+  if (!team) return null;
+  return team;
+};
