@@ -2,8 +2,8 @@ import Users from '../database/models/user';
 import { tokenGenerate } from '../middlewares/jwt';
 import { IuserPayload } from '../interfaces/interfacePayload';
 
-const LoginService = async (payload: IuserPayload) => {
-  const userLogin = await Users.findOne({ where: { email: payload.email } });
+const LoginService = async (data: IuserPayload) => {
+  const userLogin = await Users.findOne({ where: { email: data.email } });
 
   if (!userLogin) return null;
 
