@@ -4,7 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
+import Users from '../database/models/user';
 
 import { Response } from 'superagent';
 
@@ -13,6 +13,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Seu teste', () => {
+  let chaiHttpResponse: Response;
   /**
    * Exemplo do uso de stubs com tipos
    */
@@ -39,7 +40,21 @@ describe('Seu teste', () => {
   //   expect(...)
   // });
 
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+  it('Verifica o login com email e password corretos', async () => {
+    chaiHttpResponse = await chai
+    .request(app)
+    .post('/login')
+    .send({ email: 'admin@admin.com', password: 'secret_admin' });
+    expect(chaiHttpResponse.status).to.be.equal(400);
+    expect(chaiHttpResponse.body).to.be.equal({ message: 'All fields must be filled' });
+  });
+
+  it('Verifica se é possível fazer login sem o email', async () => {
+    chaiHttpResponse = await chai
+    .request(app)
+    .post('/login')
+    .send({ password: 'secret_admin' });
+    expect(chaiHttpResponse.status).to.be.equal(400);
+    expect(chaiHttpResponse.body).to.be.equal({ message: 'All fields must be filled' });
   });
 });
