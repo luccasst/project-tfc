@@ -48,3 +48,10 @@ export const matchCreat = async (obj: IMatches) => {
     inProgress,
   };
 };
+
+export const matchFinish = async (id: number) => {
+  const result = await Match.update({
+    inProgress: false,
+  }, { where: { id } });
+  return result;
+};
