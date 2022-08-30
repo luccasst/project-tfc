@@ -1,9 +1,9 @@
 import Team from '../database/models/team';
 import Match from '../database/models/match';
-import { IMatch } from '../interfaces/matchInterface';
+import { IMatches } from '../interfaces/matchInterface';
 
 export const getMatchAll = async () => {
-  const matchs = await Match.findAll({
+  const matches = await Match.findAll({
     include: [
       {
         model: Team,
@@ -15,33 +15,26 @@ export const getMatchAll = async () => {
         attributes: ['teamName'] },
     ],
   });
-  return matchs;
+  return matches;
 };
 
 export const getMatchAllInprogress = async (value: boolean) => {
   const matchInprogress = await Match.findAll({
     where: { inProgress: value },
     include: [
-      {
-        model: Team,
-        as: 'teamHome',
-        attributes: ['teamName'],
-      },
-      {
-        model: Team,
-        as: 'teamAway',
-        attributes: ['teamName'],
-      },
+      { model: Team, as: 'teamHome', attributes: ['teamName'] },
+      { model: Team, as: 'teamAway', attributes: ['teamName'] },
     ],
   });
   return matchInprogress;
 };
 
-export const matchCreat = async (obj: IMatch) => {
+export const matchCreat = async (obj: IMatches) => {
   const inProgress = true;
   const newMatch = await Match
     .create(obj);
-  const { id,
+  const {
+    id,
     homeTeam,
     homeTeamGoals,
     awayTeam,

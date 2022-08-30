@@ -1,11 +1,10 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import { Ilogin } from '../interfaces/Ilogin';
+import Ilogin from '../interfaces/Ilogin';
 
-const secret = process.env.JWT_SECRET || 'secret';
+const secret = process.env.JWT_SECRET || 'jwt_secret';
 
-const tokenGenerate = async (data: Ilogin) => {
-  const payload = { data };
+const tokenGenerate = async (payload: Ilogin) => {
   const token = jwt.sign(payload, secret, {
     algorithm: 'HS256',
     expiresIn: '7d' });

@@ -14,7 +14,9 @@ module.exports = {
         references: {
           model: 'teams',
           key: 'id'
-        }
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
        },
        home_team_goals: {
         type: Sequelize.INTEGER
