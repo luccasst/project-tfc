@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getMatchAll,
-  getMatchAllInprogress, matchCreat, matchFinish } from '../services/matchService';
+  getMatchAllInprogress, matchCreat, matchFinish, matchesUpdate } from '../services/matchService';
 
 export const matchController = async (req: Request, res: Response) => {
   const { inProgress } = req.query;
@@ -27,4 +27,12 @@ export const allMatchFinish = async (req: Request, res: Response) => {
   const matchFinished = await matchFinish(Number(id));
   if (!matchFinished) return 'It is not possible to update!';
   return res.status(200).json({ message: 'Finished' });
+};
+
+export const allMatcheUpdate = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+  const matchUpdate = await matchesUpdate(Number(id), homeTeamGoals, awayTeamGoals);
+  if (!matchUpdate) return 'Failed to update!';
+  return res.status(200).json({ message: 'Successfully updated!' });
 };

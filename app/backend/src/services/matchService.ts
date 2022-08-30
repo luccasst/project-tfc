@@ -55,3 +55,11 @@ export const matchFinish = async (id: number) => {
   }, { where: { id } });
   return result;
 };
+
+export const matchesUpdate = async (id: number, homeTeamGoals: number, awayTeamGoals: number) => {
+  const result = await Match.update({
+    homeTeamGoals,
+    awayTeamGoals,
+  }, { where: { id } });
+  return result;
+};
